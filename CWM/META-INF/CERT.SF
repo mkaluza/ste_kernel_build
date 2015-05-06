@@ -1,0 +1,19 @@
+Signature-Version: 1.0
+Created-By: 1.0 (Android SignApk)
+SHA1-Digest-Manifest: uWbRmPl/wv9ETOwHIX9C8m9G77o=
+
+Name: system/framework/lk95-res.apk
+SHA1-Digest: DMudQhokxBQ1WKYck7d+46pajPE=
+
+Name: META-INF/com/google/android/updater-script
+SHA1-Digest: d2bSRj+5WcsAOp4FP9R0S+Pjv50=
+
+Name: system/app/SystemUI.apk
+SHA1-Digest: 8+3RfEONKaS628wSI1EEibNzlXw=
+
+Name: system/app/QuickPanelSettings.apk
+SHA1-Digest: ypXcFgCt5CBo/29ESBGhW73NHnc=
+
+Name: META-INF/com/google/android/update-binary
+SHA1-Digest: CSZ7Gyg6X76HeNNSMKPZaNDGFlI=
+

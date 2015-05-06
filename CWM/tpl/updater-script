@@ -1,0 +1,60 @@
+set_progress(0.10);
+ui_print("    ");
+ui_print("    ");
+ui_print("    ");
+ui_print("    ");
+ui_print("    ");
+ui_print("    ");
+ui_print("    ");
+ui_print("    ");
+ui_print(" MK Kernel (build: __BUILD__) ");
+ui_print("    ");
+ui_print(" Marcin Kaluza <mk@flex.pm> ");
+ui_print("    ");
+ui_print("    ");
+ui_print("    ");
+ui_print("    ");
+ui_print("    ");
+ui_print("    ");
+ui_print("    ");
+ui_print("    ");
+
+if !is_mounted("/system") then
+	ui_print(" Mounting /system ");
+	mount("ext4", "EMMC", "/dev/block/mmcblk0p3", "/system");
+endif;
+
+ui_print(" Installing Kernel  ");
+package_extract_file("zImage", "/dev/block/mmcblk0p15");
+
+#FIXME must we do it?
+ui_print(" Removing old modules  ");
+delete_recursive("/system/lib/modules");
+
+ui_print(" Installing modules  ");
+package_extract_dir("modules", "/system/lib/modules/");
+
+ui_print(" Creating initramfs overlay ");
+run_program("/sbin/mkdir", "-m", "755", "-p", "/efs/common/overlay/modules", "/efs/recovery/overlay", "/efs/boot/overlay");
+
+ui_print(" Extracting utilities ");
+package_extract_dir("utils", "/tmp/utils/");
+set_perm_recursive(0, 0, 0755, 0755, "/tmp/utils/");
+
+ui_print(" Updating overlay modules  ");
+run_program("/tmp/utils/update_modules.sh");
+
+ui_print(" Updating module dependencies  ");
+run_program("/system/bin/depmod");
+run_program("/system/xbin/depmod");
+
+ui_print(" Setting permissions  ");
+set_perm_recursive(0, 0, 0755, 0644, "/system/lib/modules/");
+
+ui_print(" Cleaning up  ");
+delete_recursive("/tmp/utils");
+
+ui_print(" Syncinc...  ");
+run_program("/sbin/sync");
+
+ui_print(" Installation Completed  ");
